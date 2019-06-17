@@ -1,0 +1,81 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<h1>
+    Registration form
+</h1>
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+        <input matInput required placeholder="Name" name="name" id="name" formControlName="name">
+        <mat-hint *ngIf="registrationForm.name.invalid && registrationForm.name.dirty">Name field is required.</mat-hint>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput required placeholder="Surname" name="surname" id="surname" formControlName="surname">
+        <mat-hint *ngIf="registrationForm.surname.invalid && registrationForm.surname.dirty">Surname field is required.</mat-hint>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput required placeholder="Email" name="email" id="email" formControlName="email">
+        <mat-hint *ngIf="registrationForm.email.errors?.required && registrationForm.email.dirty">Email field is required.</mat-hint>
+        <mat-hint *ngIf="registrationForm.email.errors?.email && registrationForm.email.dirty">Value must be type of email.</mat-hint>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput placeholder="Phone number" name="phone" id="phone" formControlName="phone">
+        <mat-hint *ngIf="registrationForm.phone.errors?.pattern && registrationForm.phone.dirty">Value must be type of phone number (numbers, '+', '-', '(', ')').</mat-hint>
+    </mat-form-field>
+    <br>
+    <fieldset formGroupName="passwords">
+        <mat-form-field>
+            <input matInput required placeholder="Password" type="password" name="password" id="password"
+                   formControlName="password">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput required placeholder="Repeat password" type="password" name="repeatPassword" id="repeatPassword"
+                   formControlName="repeatPassword">
+        </mat-form-field>
+        <br>
+        <mat-hint *ngIf="registrationForm.password.errors?.required && registrationForm.password.dirty">Password field is required.</mat-hint>
+        <mat-hint *ngIf="registrationForm.password.errors?.pattern && registrationForm.password.dirty"><br>Password must contain at least one upper case character and one of the @#$%^& characters.</mat-hint>
+        <mat-hint *ngIf="registrationForm.password.value.length < 8 && registrationForm.password.dirty"><br>Password must be min 8 character length.</mat-hint>
+        <mat-hint *ngIf="registrationForm.password.value !== registrationForm.repeatPassword.value && registrationForm.password.dirty"><br>Password and repeat password must be the same.</mat-hint>
+    </fieldset>
+    <br>
+    <mat-radio-group aria-label="Your pet? (select an option)" name="pet" formControlName="pet">
+        <mat-radio-button value="dog">Dog</mat-radio-button>
+        <mat-radio-button value="cat">Cat</mat-radio-button>
+        <mat-radio-button value="other">Other</mat-radio-button>
+        <mat-hint *ngIf="registrationForm.pet.errors?.required && registrationForm.pet.dirty">Pet field is required.</mat-hint>
+    </mat-radio-group>
+    <br><br>
+    <fieldset formGroupName="address">
+        <mat-form-field>
+            <input matInput required placeholder="City" name="city" id="city" formControlName="city">
+            <mat-hint *ngIf="registrationForm.city.errors?.required && registrationForm.city.dirty">City field is required.</mat-hint>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput required placeholder="Street" name="street" id="street" formControlName="street">
+            <mat-hint *ngIf="registrationForm.street.errors?.required && registrationForm.street.dirty">Street field is required.</mat-hint>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput required placeholder="Building" name="building" id="building" formControlName="building">
+            <mat-hint *ngIf="registrationForm.building.errors?.required && registrationForm.building.dirty">Building field is required.</mat-hint>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput placeholder="FlatNo" name="flatNo" id="flatNo" formControlName="flatNo">
+        </mat-form-field>
+    </fieldset>
+    <br>
+    <fieldset formGroupName="consents">
+        <mat-checkbox formControlName="newsletter" required>Newsletter</mat-checkbox>
+        <mat-hint *ngIf="registrationForm.newsletter.invalid && registrationForm.newsletter.dirty"><br>Newsletter field must be checked.</mat-hint>
+        <br>
+        <mat-checkbox *ngIf="registrationForm.phone.valid && registrationForm.phone.value !== ''" formControlName="sms">Sms</mat-checkbox>
+    </fieldset>
+    <button [disabled]="!formData.valid" type="submit" mat-button>Register</button>
+</form>
+
+<router-outlet></router-outlet>
